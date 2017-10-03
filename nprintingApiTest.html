@@ -1,0 +1,47 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>NPrinting API task starter</h1>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script type="text/javascript">
+            (function(){
+                console.log("started")
+                var taskIDs=[
+                    "982ae927-b691-412a-b0c8-68146e8ce09b",
+                    "41ee2b15-fe36-4d52-b1c0-81d29aff148a"
+                ]
+
+
+                $.ajax({
+                        url: 'httpS://np1:4993/api/v1/login/ntlm',
+                        xhrFields: {
+                            withCredentials: true
+                        }
+                    }).done(function(data) {
+                        console.log(data);
+                        
+                        for(var i=0;i<taskIDs.length;i++){
+                            $.ajax({
+                                type: "POST",
+                                url: 'httpS://np1:4993/api/v1/tasks/'+taskIDs[i]+'/executions',
+                                xhrFields: {
+                                    withCredentials: true
+                                }
+                            }).done(function(data) {
+                                console.log("task "+i);
+                                console.log(data);
+								if(i==taskIDs.length)
+									open(location, '_self').close();
+                            });
+                        }
+                    });
+            })();
+			<!-- open(location, '_self').close(); -->			
+        </script>
+    </body>
+  </html>
+  
+  
+  
+  
